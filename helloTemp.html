@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<style type="text/css">
+		#input-canvas {
+			width: 640px;
+			height: 480px;
+			position: absolute;
+		}
+
+		#overlay-canvas {
+			width: 640px;
+			height: 480px;
+			position: absolute;
+		}
+
+		.invisible {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div>
+	<canvas id="input-canvas"></canvas>
+	<canvas id="overlay-canvas"></canvas>
+	
+	<video id="webcam-video" preload="auto" loop playsinline autoplay></video>
+
+	<img src="don.jpg" id="donny-baseball" class="invisible">
+	</div>
+	<div id = "movee" style=" position: absolute; left: 600px;">
+	<button onclick="setCalibrateState()">Calibrate</button>
+	<textarea id = "status">Calibration not started yet</textarea>
+	</div>
+	<script src="helloTemp.js"></script>
+	<script src="dlib-wasm-test.js"></script>
+</body>
+
+</html>
