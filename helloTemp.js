@@ -22,7 +22,7 @@ var calibrateState =0,calibrateCount=0;
 var outerAvg = 0, innerAvg = 0;
 var outer = [];
 var look = [0,16,37,46,30]
-var lookUD = []
+var lookUD = [27,30,21]
 function mainLoop() {
 	++count;
 	var distOuter = 0;var distInner = 0;
@@ -70,6 +70,7 @@ function mainLoop() {
 	}*/
 
 	findFacePos(landmarks);
+	
 	
 	overlayCanvasCtx.clearRect(0, 0, 640, 480);
 
@@ -169,8 +170,11 @@ calibrate = (landmarks) =>{
 
 findFacePos = (landmarks) =>{
 	points = [];
+	pointsUD = [];
 	for(i=0;i<look.length;++i)
 	points.push([landmarks[look[i]][0],landmarks[look[i]][1]]);
+	for(i=0;i<lookUD.length;++i)
+	pointsUD.push([landmarks[lookUD[i]][0],landmarks[lookUD[i]][1]]);
 
 	dist1 = findDist(points[0],points[4])
 	dist2 = findDist(points[1],points[4])
@@ -182,8 +186,30 @@ findFacePos = (landmarks) =>{
 	console.log("Looking left\n")
 	if(lookRight1>1.8)// don't decrease beyond 1.5
 	console.log("Looking Right\n")
+
+	distUD1 = findYDist(pointsUD[0],pointsUD[2])
+	distUD2 = findYDist(pointsUD[1],pointsUD[2])
+	distUD = distUD2/distUD1;
+	//console.log(distUD);
+
+	if(distUD>=2.5 && distUD<=3.1)
+	;//console.log("lookin straight");
+	if(distUD>3.5)
+	console.log("lookin down")
+	if(distUD<2.5)
+	console.log("looking up")
+
 }
 
 findDist = (point1,point2) =>{
 	return Math.sqrt(Math.pow(point1[0]-point2[0],2) + Math.pow(point1[1] - point2[1],2));
+}
+
+findYDist = (point1,point2) =>{
+	dist = point1[1] - point2[1]
+	if(dist<0)
+	return 1;
+	else
+	return dist;
+
 }
